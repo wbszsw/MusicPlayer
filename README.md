@@ -1,2 +1,6 @@
-# MusicPlayer
-音乐播放网站，前端Vue框架+h5 audio的api，后端node
+# 
+
+> [CSDN博客](https://blog.csdn.net/m0_37965018)
+
+
+> [github博客](https://github.com/Corefo/ "github")
