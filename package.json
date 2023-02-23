@@ -333,7 +333,8 @@
     "typescript": "^4.7.4"
   },
   "scripts": {
-    "dev": "concurrently \"node ./client/\" \"npm run service-dev\" \"node ./helios-view/build/dev-server.js\"",
+    "c-dev": "concurrently \"cd client\" \"npm run dev\"",
+    "s-dev": "concurrently \"node ./server/\" \"npm run start\"",
     "build": "",
     "test-client": "vitest --environment jsdom --root src/",
     "test-server": "jest"
