@@ -22,6 +22,7 @@ import playControl from "@/components/play/control/index.vue";
   .play-content {
     display: flex;
     flex-grow: 1;
+    overflow: hidden;
   }
   .play-footer {
   }

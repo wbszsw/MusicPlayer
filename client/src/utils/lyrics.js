@@ -8,6 +8,7 @@ class Lyrics {
         title: next.substring(next.indexOf("]") + 1, next.length),
         isLight: false,
       });
+      return prev;
     }, []);
   }
   lyricsStrLight(time, lyricList) {

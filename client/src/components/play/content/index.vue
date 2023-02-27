@@ -1,11 +1,11 @@
 <template>
   <div class="play-content">
-    <Transition>
-      <lyric v-show="type === 1" @click="changeType(0)" />
-    </Transition>
-    <Transition>
-      <poster v-show="type === 0" @click="changeType(1)" />
-    </Transition>
+    <!-- <Transition> -->
+    <lyric v-show="type === 1" @click="changeType(0)" />
+    <!-- </Transition> -->
+    <!-- <Transition> -->
+    <poster v-show="type === 0" @click="changeType(1)" />
+    <!-- </Transition> -->
   </div>
 </template>
 <script setup>

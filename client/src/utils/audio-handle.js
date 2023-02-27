@@ -34,7 +34,7 @@ class AudioHandle {
   timeupdateEvent(callback) {
     this.audio.addEventListener("timeupdate", () => {
       if (this.audio.currentTime) {
-        callback(timeFormat(this.audio.currentTime));
+        callback(this.audio.currentTime);
       }
     });
   }

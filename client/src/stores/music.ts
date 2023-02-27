@@ -6,27 +6,44 @@ import {
   getMusicInfo as getMusicInfoApi,
 } from "@/api/index.js";
 export const useMusicStore = defineStore("MUSIC", () => {
-  let musicList: Array = [];
+  const MUSIC = reactive({
+    musicList: [],
+    musicInfo: {},
+    hash:""
+  });
+  function changeHash(str) {
+    MUSIC.hash = str;
+  }
+  let musicList = [];
   const getMusicList = async (params: Object) => {
-    musicList = [];
     const res = await getMusicListApi(params);
     const list = res?.data?.data?.data?.lists || [];
     musicList = list.map((item) => utils.songPipeView(item));
-    return computed(() => musicList);
+    MUSIC.musicList = musicList;
+    return computed(() => MUSIC.musicList);
   };
   // 做个缓存
-  let musicInfo = {};
+  let musicInfo = reactive({});
   const getMusicInfo = async (params: Object) => {
-    let id: null = null;
-    if (!musicInfo[params.id]) {
+    let id;
+    if (!musicInfo[params.hash]) {
       const infos = await getMusicInfoApi(params);
       let info = infos.data.data.data;
-      musicInfo[info.id] = info;
-      id = info.id;
+      musicInfo[info.hash] = info;
+      id = info.hash;
     } else {
-      id = params.id;
+      id = params.hash;
     }
+    MUSIC.musicInfo = musicInfo[id];
     return computed(() => musicInfo[id]);
   };
-  return { musicList, getMusicList, musicInfo, getMusicInfo };
+  return {
+    musicList: MUSIC.musicList,
+    getMusicList,
+    musicInfo,
+    getMusicInfo,
+    hash: MUSIC.hash,
+    changeHash,
+    MUSIC
+  };
 });

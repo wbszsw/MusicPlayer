@@ -13,7 +13,7 @@ export function timeFormat(num) {
   if (num > 60) {
     mins = parseInt(num / 60);
     seconds = (num % 60).toFixed(2);
-    return this.getMinAndSeconds(mins, seconds);
+    return getMinAndSeconds(mins, seconds);
   } else {
     num < 10 ? `0{num}` : num.toFixed(2);
     return `00:${num}`;

@@ -36,8 +36,21 @@ class Music extends AudioHandle {
   }
   set musicInfo(music) {
     this.music = music;
-    const { lyrics } = this.lyricsStr;
-    this.lyricsList = lyrics.getlyricsList(lyrics);
+    const { lyrics: lyricsStr } = music;
+    this.lyricsStrList = lyrics.getlyricsList(lyricsStr);
+  }
+  get lyricsList() {
+    if (!this.music) {
+      return new Error("请先传入具体音乐详情");
+    }
+    return this.lyricsStrList;
+  }
+  lyricsStrLight(time) {
+    try {
+      return lyrics.lyricsStrLight(time, this.lyricsStrList);
+    } catch (e) {
+      throw new Error("somethong wroing");
+    }
   }
   set audioConfigParams(params) {
     this.musicConfig = {
