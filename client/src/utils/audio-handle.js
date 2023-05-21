@@ -24,7 +24,7 @@ class AudioHandle {
    */
   canplayEvent(callback) {
     this.audio.addEventListener("canplay", () => {
-      callback(timeFormat(this.audio.duration));
+      callback(this.audio.duration);
     });
   }
 

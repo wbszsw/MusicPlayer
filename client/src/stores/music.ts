@@ -9,7 +9,7 @@ export const useMusicStore = defineStore("MUSIC", () => {
   const MUSIC = reactive({
     musicList: [],
     musicInfo: {},
-    hash:""
+    hash: "",
   });
   function changeHash(str) {
     MUSIC.hash = str;
@@ -37,6 +37,36 @@ export const useMusicStore = defineStore("MUSIC", () => {
     MUSIC.musicInfo = musicInfo[id];
     return computed(() => musicInfo[id]);
   };
+  const findMusic = (type) => {
+    console.log(musicList, type);
+    return musicList.reduce((prev, next, index) => {
+      if (next.FileHash === MUSIC.hash) {
+        if (type === "next") {
+          if (index + 1 >= musicList.length) {
+            prev = musicList[0];
+          } else {
+            prev = musicList[index + 1];
+          }
+        } else if (type === "prev") {
+          if (index - 1 < 0) {
+            prev = musicList[musicList.length - 1];
+          } else {
+            prev = musicList[index - 1];
+          }
+        }
+      }
+      return prev;
+    }, {});
+  };
+  const changePlay = (type) => {
+    const result = findMusic(type);
+    const { FileHash: hash } = result;
+    changeHash(hash)
+    getMusicInfo({
+      hash: hash,
+      type: 3,
+    });
+  };
   return {
     musicList: MUSIC.musicList,
     getMusicList,
@@ -44,6 +74,7 @@ export const useMusicStore = defineStore("MUSIC", () => {
     getMusicInfo,
     hash: MUSIC.hash,
     changeHash,
-    MUSIC
+    MUSIC,
+    changePlay
   };
 });

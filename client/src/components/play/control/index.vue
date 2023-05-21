@@ -23,15 +23,13 @@
 import { inject, watch, watchEffect, ref, computed } from "vue";
 import { useMusicStore } from "@/stores/music";
 import { storeToRefs } from "pinia";
-const store = useMusicStore()
-const { MUSIC } = storeToRefs(store);
+const store = useMusicStore();
+const { MUSIC, changePlay } = storeToRefs(store);
 const music = inject("music");
 const { musicConfig } = music;
 const isLoop = musicConfig.loop;
 const { musicList, musicInfo, hash } = MUSIC.value;
-watchEffect(() => {
-  console.log({ musicList, musicInfo, hash, MUSIC, music });
-});
+import eventBus from "@/event";
 function control() {
   if (music.audio.paused) {
     music.play();
@@ -39,48 +37,12 @@ function control() {
     music.pause();
   }
 }
-const playHash = computed(() => hash);
-function findMusic(type) {
-  console.log(musicList, type, playHash.value);
-  return musicList.reduce((prev, next, index) => {
-    if (next.FileHash === playHash.value) {
-      if (type === "next") {
-        console.log(1111, index, musicList.length);
-        if (index + 1 >= musicList.length) {
-          prev = musicList[0];
-        } else {
-          prev = musicList[index + 1];
-        }
-      } else if (type === "prev") {
-        if (index - 1 < 0) {
-          prev = musicList[musicList.length - 1];
-        } else {
-          prev = musicList[index - 1];
-        }
-      }
-    }
-    return prev;
-  }, {});
-}
-async function left() {
-  const result = findMusic("prev");
-  console.log({ result });
-  const { FileHash: prevHash } = result;
-  await store.getMusicInfo({
-    hash: prevHash,
-    type: 3,
-  });
-  music.play();
+
+async function prev() {
+  store.changePlay("prev");
 }
 async function next() {
-  const result = findMusic("next");
-  const { FileHash: nextHash } = result;
-  console.log(1111,nextHash, result, store) ;
-  await store.getMusicInfo({
-    hash: nextHash,
-    type: 3,
-  });
-  music.play();
+  store.changePlay("next");
 }
 function loop() {
   isLoop.value = !isLoop.value;

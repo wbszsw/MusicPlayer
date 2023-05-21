@@ -14,7 +14,7 @@
   </div>
 </template>
 <script setup>
-import { inject, reactive, watchEffect, computed, ref } from "vue";
+import { inject, reactive, watchEffect, computed, ref, watch } from "vue";
 const music = inject("music");
 const lyricInfo = reactive({});
 const key = ref(1000);

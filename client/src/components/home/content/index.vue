@@ -5,11 +5,12 @@
         v-for="(item, index) in searchList"
         :key="item.id"
         @click="toListen(item)"
+        class="list-item"
       >
-        <var-cell icon="fire" :title="item.name">
+        <var-cell icon="fire" :title="item.name" class="music-list-item">
           <template #extra>
-            <span v-if="playIndex === index">播放</span>
             <var-icon name="information" />
+            <span v-if="playIndex === index">播放</span>
           </template>
         </var-cell>
       </div>
@@ -61,13 +62,6 @@ watchEffect(() => {
   const index = searchList.value.findIndex(
     (item) => item.FileHash === MUSIC.value.musicInfo.hash
   );
-  console.log(
-    "触发",
-    searchList.value,
-    index,
-    MUSIC.value.musicInfo.FileHash,
-    MUSIC.value.musicInfo.hash
-  );
   playIndex.value = index;
 });
 </script>
@@ -81,11 +75,13 @@ watchEffect(() => {
   opacity: 0;
   transform: translateX(30px);
 }
-.search-list {
-  :deep(.var-cell__extra) {
+</style>
+<style lang="scss">
+.music-list-item {
+  .var-cell__extra {
     flex: none;
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
     justify-content: space-between;
     width: 60px;
   }

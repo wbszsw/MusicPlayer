@@ -16,7 +16,7 @@ class Music extends AudioHandle {
     //(只读) 返回当前音频/视频的长度（以秒计）
     duration: 0,
     //设置或返回音频/视频的当前播放位置（以秒计）
-    currentTime: 1,
+    currentTime: 0,
     //设置或返回音频/视频的当前音量，范围0~1
     volume: 1,
     //设置或返回音频/视频的当前播放速度 0,1,2
@@ -38,6 +38,7 @@ class Music extends AudioHandle {
     this.music = music;
     const { lyrics: lyricsStr } = music;
     this.lyricsStrList = lyrics.getlyricsList(lyricsStr);
+    this.listenCanplayEvent(() => {});
   }
   get lyricsList() {
     if (!this.music) {
@@ -54,19 +55,24 @@ class Music extends AudioHandle {
   }
   set audioConfigParams(params) {
     this.musicConfig = {
-      ...Music.AUDIO_CONFIG,
+      ...this.musicConfig,
       ...params,
     };
   }
   listenCanplayEvent(callback) {
-    this.canplayEvent((time) => {
-      this.audioConfigParams = { duration: time };
+    const that = this
+    that.canplayEvent((time) => {
+      that.audioConfigParams = {
+        duration: time,
+        currentTime: that.audio.duration,
+      };
       callback(time);
     });
   }
   listenTimeupdateEvent(callback) {
-    this.timeupdateEvent((time) => {
-      this.audioConfigParams = { currentTime: time };
+    const that = this
+    that.timeupdateEvent((time) => {
+      that.audioConfigParams = { duration: time };
       callback(time);
     });
   }

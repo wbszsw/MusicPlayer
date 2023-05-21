@@ -15,7 +15,7 @@ export function timeFormat(num) {
     seconds = (num % 60).toFixed(2);
     return getMinAndSeconds(mins, seconds);
   } else {
-    num < 10 ? `0{num}` : num.toFixed(2);
+    num < 10 ? `0${num}` : num.toFixed(2);
     return `00:${num}`;
   }
 }

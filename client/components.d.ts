@@ -21,9 +21,13 @@ declare module '@vue/runtime-core' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Slide: typeof import('./src/components/slide/index.vue')['default']
+    SlideSlideComponents: typeof import('./src/components/slide/slide-components.vue')['default']
     VarButton: typeof import('@varlet/ui')['_ButtonComponent']
     VarCell: typeof import('@varlet/ui')['_CellComponent']
     VarIcon: typeof import('@varlet/ui')['_IconComponent']
     VarInput: typeof import('@varlet/ui')['_InputComponent']
+    VarProgress: typeof import('@varlet/ui')['_ProgressComponent']
+    VarSlider: typeof import('@varlet/ui')['_SliderComponent']
+    VarSpace: typeof import('@varlet/ui')['_SpaceComponent']
   }
 }
